@@ -7,17 +7,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.service.autofill.UserData;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase bancoDados;
     public ListView listViewDados;
     public Button botao;
+    private UserAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         listViewDados = (ListView) findViewById(R.id.listViewdados);
         botao = (Button) findViewById(R.id.btnCadastrar);
+        adapter = new UserAdapter(listViewDados.getContext(), new ArrayList<UserLine>());
+        listViewDados.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         criarBancoDados();
-        inserirDadosTemp();
         listarDados();
     }
 
@@ -55,39 +60,23 @@ public class MainActivity extends AppCompatActivity {
         try {
             bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
             Cursor meuCursor = bancoDados.rawQuery("SELECT id, nome FROM cliente",null);
-            ArrayList<String> linhas = new ArrayList<String>();
-            ArrayAdapter meuAdapter = new ArrayAdapter<String>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    android.R.id.text1,
-                    linhas
-            );
-            listViewDados.setAdapter(meuAdapter);
+
+            ArrayList<UserLine> linhas = new ArrayList<UserLine>();
+
+            adapter = new UserAdapter(listViewDados.getContext(), linhas);
+            listViewDados.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            listViewDados.setAdapter(adapter);
             meuCursor.moveToFirst();
             while (meuCursor != null){
-                linhas.add(meuCursor.getString(1));
+                UserLine userLine= new UserLine();
+                userLine.setId(meuCursor.getInt(0));
+                userLine.setName(meuCursor.getString(1));
+                linhas.add(userLine);
                 meuCursor.moveToNext();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void inserirDadosTemp(){
-        try {
-            bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-            String sql = "INSERT INTO cliente (nome) VALUES (?)";
-            SQLiteStatement stmt = bancoDados.compileStatement(sql);
-
-            stmt.bindString(1, "Maria joao");
-            stmt.executeInsert();
-
-            stmt.bindString(1, "Matheus Barros");
-            stmt.executeInsert();
-
-            stmt.bindString(1, "Maira Scomparim");
-            stmt.executeInsert();
-            bancoDados.close();
-        }catch (Exception e){
             e.printStackTrace();
         }
     }
