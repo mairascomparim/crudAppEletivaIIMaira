@@ -1,5 +1,7 @@
 package com.example.crudappeletivaiimaira;
 
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private SQLiteDatabase bancoDados;
     public ListView listViewDados;
     public Button botao;
     private UserAdapter adapter;
+    Repositorio repositorio = new Repositorio();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,26 +43,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        criarBancoDados();
+        repositorio.createBanco();
         listarDados();
-    }
-
-    public void criarBancoDados() {
-        try {
-            bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS cliente(" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT" +
-                    ", nome VARCHAR)");
-            bancoDados.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void listarDados() {
         try {
-            bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-            Cursor meuCursor = bancoDados.rawQuery("SELECT id, nome FROM cliente",null);
+            Cursor meuCursor = repositorio.listarRegistros();
 
             ArrayList<UserLine> linhas = new ArrayList<UserLine>();
 
@@ -76,10 +66,23 @@ public class MainActivity extends AppCompatActivity {
                 linhas.add(userLine);
                 meuCursor.moveToNext();
             }
+            //bancoDados.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+//    public void excluir(Integer idDelete){
+//        try {
+//            criarBancoDados();
+//            bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
+//            bancoDados.execSQL("DELETE FROM CLIENTE WHERE id = "+ idDelete);
+//            listarDados();
+//            bancoDados.close();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
     public void abrirTelaCadastro(){
         Intent intent = new Intent(this, CadastroActivity.class);
@@ -90,4 +93,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         listarDados();
     }
+
+
 }

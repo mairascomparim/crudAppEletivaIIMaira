@@ -5,6 +5,7 @@ import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -23,6 +25,7 @@ public class UserAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<UserLine> mUserData;
+    private SQLiteDatabase bancoDados;
 
     public UserAdapter(Context context, ArrayList userData) {
         super();
@@ -34,21 +37,6 @@ public class UserAdapter extends BaseAdapter {
         // return the number of records
         return mUserData.size();
     }
-
-    //public void excluir(int Id){
-      //  try {
-        //    SQLiteDatabase bancoDados;
-          //  bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-           // String sql = "DELETE FROM cliente WHERE Id = (?)";
-          //  SQLiteStatement stmt = bancoDados.compileStatement(sql);
-          //  stmt.bindString(1, Id));
-          //  stmt.executeInsert();
-        //    bancoDados.close();
-      //      finish();
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //    }
-    //}
 
     // getView method is called for each item of ListView
     public View getView(int position, View view, ViewGroup parent) {
@@ -84,7 +72,7 @@ public class UserAdapter extends BaseAdapter {
                         "Sim",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                                Integer idSelectd = mUserData.get(position).getId();
                             }
                         });
 
