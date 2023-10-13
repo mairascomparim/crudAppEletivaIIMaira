@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         listViewDados = (ListView) findViewById(R.id.listViewdados);
         botao = (Button) findViewById(R.id.btnCadastrar);
-        adapter = new UserAdapter(listViewDados.getContext(), new ArrayList<UserLine>());
+        adapter = new UserAdapter(listViewDados.getContext(), new ArrayList<UserLine>(), this);
         listViewDados.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
             ArrayList<UserLine> linhas = new ArrayList<UserLine>();
 
-            adapter = new UserAdapter(listViewDados.getContext(), linhas);
+            adapter = new UserAdapter(listViewDados.getContext(), linhas, this);
             listViewDados.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -76,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
                 linhas.add(userLine);
                 meuCursor.moveToNext();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluir(int Id){
+        try {
+            SQLiteDatabase bancoDados;
+            bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
+            String table = "cliente";
+            String whereClause = "id=?";
+            String[] args = new String[]{String.valueOf(Id)};
+            bancoDados.delete(table, whereClause, args);
+            bancoDados.close();
+            listarDados();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.example.crudappeletivaiimaira;
 import static android.content.Context.MODE_PRIVATE;
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,32 +24,19 @@ public class UserAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<UserLine> mUserData;
+    private MainActivity mActivity;
 
-    public UserAdapter(Context context, ArrayList userData) {
+    public UserAdapter(Context context, ArrayList userData, MainActivity activity) {
         super();
         mContext = context;
         mUserData = userData;
+        mActivity = activity;
     }
 
     public int getCount() {
         // return the number of records
         return mUserData.size();
     }
-
-    //public void excluir(int Id){
-      //  try {
-        //    SQLiteDatabase bancoDados;
-          //  bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-           // String sql = "DELETE FROM cliente WHERE Id = (?)";
-          //  SQLiteStatement stmt = bancoDados.compileStatement(sql);
-          //  stmt.bindString(1, Id));
-          //  stmt.executeInsert();
-        //    bancoDados.close();
-      //      finish();
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //    }
-    //}
 
     // getView method is called for each item of ListView
     public View getView(int position, View view, ViewGroup parent) {
@@ -83,9 +71,11 @@ public class UserAdapter extends BaseAdapter {
                 deleteBuilder.setPositiveButton(
                         "Sim",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int id) {
+                                mActivity.excluir(mUserData.get(position).getId());
                             }
+
                         });
 
                 deleteBuilder.setNegativeButton(
