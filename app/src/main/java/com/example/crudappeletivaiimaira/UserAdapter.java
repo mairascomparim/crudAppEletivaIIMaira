@@ -57,6 +57,7 @@ public class UserAdapter extends BaseAdapter {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mActivity.abrirTelaAlterar(mUserData.get(position).getId());
 
             }
         });

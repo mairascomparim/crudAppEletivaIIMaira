@@ -26,7 +26,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        criarBancoDados();
 
+        Intent intent = new Intent(this, CadastroUsuarioActivity.class);
+       startActivity(intent);
+
+    }
+
+    public void carregarDadosIniciais(){
+        criarBancoDados();
         listViewDados = (ListView) findViewById(R.id.listViewdados);
         botao = (Button) findViewById(R.id.btnCadastrar);
         adapter = new UserAdapter(listViewDados.getContext(), new ArrayList<UserLine>(), this);
@@ -40,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        criarBancoDados();
         listarDados();
     }
 
@@ -50,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS cliente(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT" +
                     ", nome VARCHAR)");
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS usuario(" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", nome VARCHAR, email VARCHAR, senha VARCHAR)");
             bancoDados.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public void listarDados() {
         try {
             bancoDados = openOrCreateDatabase("crudappmaira", MODE_PRIVATE, null);
-            Cursor meuCursor = bancoDados.rawQuery("SELECT id, nome FROM cliente",null);
+            Cursor meuCursor = bancoDados.rawQuery("SELECT * FROM usuario",null);
 
             ArrayList<UserLine> linhas = new ArrayList<UserLine>();
 
@@ -104,5 +114,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         listarDados();
+    }
+
+    public void abrirTelaAlterar(int id){
+    Intent intent = new Intent(this, AlterarActivity.class);
+    intent.putExtra("id",id);
+    startActivity(intent);
     }
 }

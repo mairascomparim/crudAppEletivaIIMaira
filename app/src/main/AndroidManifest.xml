@@ -13,8 +13,19 @@
         android:theme="@style/Theme.CrudAppEletivaIIMaira"
         tools:targetApi="31">
         <activity
-            android:name=".CadastroActivity" android:parentActivityName=".MainActivity"
+            android:name=".CadastroUsuarioActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlterarActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

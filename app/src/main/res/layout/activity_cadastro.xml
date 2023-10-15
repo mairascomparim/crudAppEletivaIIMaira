@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.068" />
 
     <Button
-        android:id="@+id/buttonCadastro"
+        android:id="@+id/buttonCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
@@ -30,5 +30,5 @@
         app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNome"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintVertical_bias="0.104" />
 </androidx.constraintlayout.widget.ConstraintLayout>
