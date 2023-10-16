@@ -89,15 +89,29 @@
         app:layout_constraintVertical_bias="0.311" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/editTextFazerLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Já tem conta? Faça Login aqui"
+        android:clickable="true"
+        android:text="Já tem conta? "
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.194" />
+
+    <Button
+        android:id="@+id/btnFazerLogin"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:text="Faça Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.182" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

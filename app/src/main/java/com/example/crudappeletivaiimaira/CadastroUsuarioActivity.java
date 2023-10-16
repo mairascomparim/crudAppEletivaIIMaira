@@ -3,7 +3,6 @@ package com.example.crudappeletivaiimaira;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,8 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.util.ArrayList;
+import android.widget.TextView;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -23,6 +21,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     EditText senha;
     EditText senhaConfirmar;
     Button botao;
+    Button botaoLogin;
     SQLiteDatabase bancoDados;
 
     @Override
@@ -35,6 +34,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         senha = (EditText) findViewById(R.id.editTextSenha);
         senhaConfirmar = (EditText) findViewById(R.id.editTextConfirmarSenha);
         botao = (Button) findViewById(R.id.buttonCadastrar);
+        botaoLogin = (Button) findViewById(R.id.btnFazerLogin);
+
 
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,19 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
             }
         });
+
+        botaoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chamarTelaLogin();
+
+            }
+        });
+    }
+
+    public void chamarTelaLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void cadastrar(){

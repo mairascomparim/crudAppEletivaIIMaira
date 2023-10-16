@@ -24,13 +24,13 @@ public class UserAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<UserLine> mUserData;
-    private MainActivity mActivity;
+    private ListarDadosActivity listarDadosActivity;
 
-    public UserAdapter(Context context, ArrayList userData, MainActivity activity) {
+    public UserAdapter(Context context, ArrayList userData, ListarDadosActivity activity) {
         super();
         mContext = context;
         mUserData = userData;
-        mActivity = activity;
+        listarDadosActivity = activity;
     }
 
     public int getCount() {
@@ -57,7 +57,7 @@ public class UserAdapter extends BaseAdapter {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.abrirTelaAlterar(mUserData.get(position).getId());
+                listarDadosActivity.abrirTelaAlterar(mUserData.get(position).getId());
 
             }
         });
@@ -74,7 +74,7 @@ public class UserAdapter extends BaseAdapter {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int id) {
-                                mActivity.excluir(mUserData.get(position).getId());
+                                listarDadosActivity.excluir(mUserData.get(position).getId());
                             }
 
                         });
