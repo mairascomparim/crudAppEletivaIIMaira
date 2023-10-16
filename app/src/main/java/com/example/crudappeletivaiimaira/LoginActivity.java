@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if(loginValido) {
             Intent intent = new Intent(this, ListarDadosActivity.class);
+            intent.putExtra("email",edittextEmail.getText().toString());
             startActivity(intent);
         }else{
             AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class ListarDadosActivity extends AppCompatActivity {
     public ListView listViewDados;
     public Button botao;
     private UserAdapter adapter;
+    public TextView textemailusuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class ListarDadosActivity extends AppCompatActivity {
         listViewDados = (ListView) findViewById(R.id.listViewdados);
         botao = (Button) findViewById(R.id.btnCadastrar);
         adapter = new UserAdapter(listViewDados.getContext(), new ArrayList<UserLine>(), this);
+        textemailusuario = (TextView) findViewById(R.id.txtEmailAcesso);
         listViewDados.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -37,6 +40,19 @@ public class ListarDadosActivity extends AppCompatActivity {
                 abrirTelaCadastro();
             }
         });
+
+        String email;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                email= null;
+            } else {
+                email= extras.getString("email");
+            }
+        } else {
+            email= (String) savedInstanceState.getSerializable("email");
+        }
+        textemailusuario.setText("Usuário:"+email);;
 
         listarDados();
 
